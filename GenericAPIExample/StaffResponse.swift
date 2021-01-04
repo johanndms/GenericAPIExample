@@ -7,7 +7,7 @@
 
 import Foundation
 
-class StaffResponse: Decodable {
+struct StaffResponse: Decodable {
 	
 	let staff: [StaffItem]
 	

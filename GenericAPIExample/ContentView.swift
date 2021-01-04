@@ -10,16 +10,39 @@ import Combine
 
 struct ContentView: View {
 	
-	@ObservedObject var staffVM = StaffViewModel()
+	@StateObject var staffVM = StaffViewModel()
+	@State var cancellables = Set<AnyCancellable>()
+	
 	
     var body: some View {
 		
-		List(staffVM.staff) { teacher in
+		VStack {
+
+			List(staffVM.staff) { teacher in
 			
-			Text(teacher.firstName)
+				HStack {
+					Text(teacher.firstName)
+					Text(teacher.lastName)
+				}
+				
+			}
+		
+			Text("Found \(staffVM.paginationReponse?.totalResults ?? 0) teachers")
 			
 		}.onAppear(perform: {
 			staffVM.getStaff()
+				.sink(
+					receiveCompletion: {completion in
+						print("Completion: \(completion)")
+					},
+					receiveValue: { value in
+						self.staffVM.staff = value.staff
+						self.staffVM.paginationReponse = value.paginationResponse
+						print("Value: \(value)")
+					}
+				)
+				.store(in: &cancellables)
+				
 		})
 		
     }

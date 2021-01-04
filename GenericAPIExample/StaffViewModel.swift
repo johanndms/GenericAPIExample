@@ -11,18 +11,16 @@ import Combine
 class StaffViewModel: ObservableObject {
 	
 	@Published var staff = [StaffItem]()
+	@Published var paginationReponse: PaginationResponse?
 
-	let httpClient = HTTPClient()
-	let endpointUrl = URL(string:  "https://api.webdesignlab4u.com/API/MAV1/getStaff.php?clientId=NGtNcXRVbkNFdnh5VUJheXQ2TC9kNk5aK01zS2dGUlk5VVNjYkI5TmpHeWhmai9ReEhiciszdlBCWUwrQmtDMQ==")!
+	let endpointUrl = URL(string:  "https://api.webdesignlab4u.com/API/MAV1/getStaff.php?clientId=Y0ZETlRwdW0xS2JicllnUXhlWFhPcUVmTTQzaVorRHhHdGlUR3prdVozZVdzVzJkcnVWem42SFhnMWUxdWtZNg==")!
 	
 	
-	func getStaff() -> AnyPublisher<[StaffResponse], Error> {
-		
-		print(endpointUrl)
+	func getStaff() -> AnyPublisher<StaffResponse, Error> {
 		
 		let request = URLRequest(url: endpointUrl)
 	
-		return httpClient.perform(request)
+		return HTTPService.perform(request)
 			.map(\.value)
 			.eraseToAnyPublisher()
 		
