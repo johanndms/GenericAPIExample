@@ -38,7 +38,6 @@ struct ContentView: View {
 					receiveValue: { value in
 						self.staffVM.staff = value.staff
 						self.staffVM.paginationReponse = value.paginationResponse
-						print("Value: \(value)")
 					}
 				)
 				.store(in: &cancellables)
