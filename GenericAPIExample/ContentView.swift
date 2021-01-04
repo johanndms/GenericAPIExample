@@ -10,7 +10,7 @@ import Combine
 
 struct ContentView: View {
 	
-	@ObservedObject var staffVM = StaffViewModel
+	@ObservedObject var staffVM = StaffViewModel()
 	
     var body: some View {
 		
@@ -18,7 +18,9 @@ struct ContentView: View {
 			
 			Text(teacher.firstName)
 			
-		}.onAppear(perform: staffVM.getStaff())
+		}.onAppear(perform: {
+			staffVM.getStaff()
+		})
 		
     }
 }
